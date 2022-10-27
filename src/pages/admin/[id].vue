@@ -57,7 +57,7 @@ const submit = () => {
     </div>
     <div>
       <span v-if="isLoading">Loading...</span>
-      <span v-else-if="isError">Error: {{ error }}</span>
+      <span v-else-if="isError">{{ error }}</span>
       <div v-else-if="data">
         <input
           v-model="data.title"

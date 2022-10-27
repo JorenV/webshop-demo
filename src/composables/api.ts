@@ -40,4 +40,9 @@ export const updateProduct = async (product: Product): Promise<Product> => await
 export const getProduct = async (id: number): Promise<Product> =>
   await fetch(`https://euricom-test-api.herokuapp.com/api/products/${id}`).then(
     response => response.json(),
-  )
+  ).then((response) => {
+    if (response.code)
+      throw new Error(response.message ? response.message : 'Oops.. something went wrong')
+
+    return response
+  })
