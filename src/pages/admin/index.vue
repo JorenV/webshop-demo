@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useToast } from 'vue-toast-notification'
 import type { Sort } from '~/types'
 
 const { t } = useI18n()
+const toast = useToast()
 const queryClient = useQueryClient()
 const productsPerPage = 15
 const sort = ref<Sort>('title')
@@ -25,9 +27,18 @@ const numberOfPages = computed((): number => Math.ceil((data.value?.total ?? 0) 
 
 const deleteMutation = useMutation(deleteProduct, {
   onSuccess: () => {
+    toast.success(t('product.removed'))
     // Invalidate and refetch
     queryClient.invalidateQueries(['products'])
   },
+  onError: () => {
+    toast.error('Oops.. something went wrong')
+  },
+})
+
+watch(isError, (value) => {
+  if (value)
+    toast.error('Oops.. something went wrong')
 })
 
 const removeProduct = (id: number) => {
