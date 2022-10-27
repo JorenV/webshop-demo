@@ -16,3 +16,9 @@ product:
   title: Title
   image: Image
   price: Price
+  basePrice: BasePrice
+  stocked: Stocked
+  sku: SKU
+pagination:
+  prev: Previous page
+  next: Next page

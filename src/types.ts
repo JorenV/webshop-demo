@@ -19,3 +19,5 @@ export interface Products {
   pageSize: number
   selectedProducts: Product[]
 }
+
+export type Sort = keyof Product
