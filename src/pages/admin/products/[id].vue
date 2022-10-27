@@ -33,7 +33,7 @@ const mutation = useMutation(updateProduct, {
 const deleteMutation = useMutation(deleteProduct, {
   onSuccess: () => {
     toast.success(t('product.removed'))
-    router.push('/admin')
+    router.push('/admin/products')
   },
   onError: () => {
     toast.error('Oops.. something went wrong')
@@ -51,7 +51,7 @@ const submit = () => {
       <p text-xl mb-2>
         Webshop Admin
       </p>
-      <router-link to="/admin" btn>
+      <router-link to="/admin/products" btn>
         {{ t('back') }}
       </router-link>
     </div>

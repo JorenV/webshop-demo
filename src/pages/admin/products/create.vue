@@ -23,7 +23,7 @@ const mutation = useMutation(createProduct, {
   },
   onSuccess: () => {
     toast.success(t('product.created'))
-    router.push('/admin')
+    router.push('/admin/products')
     // Invalidate and refetch
     // queryClient.invalidateQueries(['products'])
   },
@@ -41,7 +41,7 @@ const submit = () => {
       <p text-xl mb-2>
         Webshop Admin
       </p>
-      <router-link to="/admin" btn>
+      <router-link to="/admin/products" btn>
         {{ t('back') }}
       </router-link>
     </div>
