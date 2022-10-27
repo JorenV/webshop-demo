@@ -48,9 +48,15 @@ const removeProduct = (id: number) => {
 
 <template>
   <div>
-    <p>
-      Webshop Admin
-    </p>
+    <div>
+      <p>
+        Webshop Admin
+      </p>
+      <router-link to="/admin/create" btn>
+        {{ t('product.create') }}
+      </router-link>
+    </div>
+
     <span v-if="isLoading">Loading...</span>
     <span v-else-if="isError">Error: {{ error }}</span>
     <table v-else table-auto inline-block>

@@ -21,6 +21,7 @@ product:
   sku: SKU
   actions: Actions
   removed: Product removed!
+  create: New product 
 pagination:
   prev: Previous page
   next: Next page

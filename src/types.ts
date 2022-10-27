@@ -21,3 +21,6 @@ export interface Products {
 }
 
 export type Sort = keyof Product
+
+export type ProductInput = Partial<Product>
+
