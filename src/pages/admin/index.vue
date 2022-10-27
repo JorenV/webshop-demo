@@ -48,8 +48,8 @@ const removeProduct = (id: number) => {
 
 <template>
   <div>
-    <div>
-      <p>
+    <div mb-5>
+      <p text-xl mb-2>
         Webshop Admin
       </p>
       <router-link to="/admin/create" btn>
@@ -121,9 +121,9 @@ const removeProduct = (id: number) => {
             {{ product.basePrice }}
           </td>
           <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
-            <button class="icon-btn mx-2 !outline-none">
+            <router-link :to="`/admin/${product.id}`" class="icon-btn mx-2 !outline-none">
               <div i="carbon-edit" />
-            </button>
+            </router-link>
             <button class="icon-btn mx-2 !outline-none" @click="removeProduct(product.id)">
               <div i="carbon-trash-can" />
             </button>

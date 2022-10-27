@@ -37,9 +37,14 @@ const submit = () => {
 
 <template>
   <div>
-    <p>
-      Webshop Admin
-    </p>
+    <div mb-5>
+      <p text-xl mb-2>
+        Webshop Admin
+      </p>
+      <router-link to="/admin" btn>
+        {{ t('back') }}
+      </router-link>
+    </div>
     <div>
       <h3>{{ $t('product.create') }}</h3>
       <input
