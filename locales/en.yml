@@ -22,6 +22,7 @@ product:
   actions: Actions
   removed: Product removed!
   create: New product
+  delete: Delete product
   form:
     update: Update product 
 pagination:

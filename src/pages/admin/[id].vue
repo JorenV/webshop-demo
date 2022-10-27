@@ -5,7 +5,7 @@ import { useToast } from 'vue-toast-notification'
 const props = defineProps<{ id: string }>()
 const { t } = useI18n()
 const toast = useToast()
-// const router = useRouter()
+const router = useRouter()
 
 const {
   isLoading,
@@ -28,6 +28,16 @@ const mutation = useMutation(updateProduct, {
     // queryClient.invalidateQueries(['product'])
   },
 
+})
+
+const deleteMutation = useMutation(deleteProduct, {
+  onSuccess: () => {
+    toast.success(t('product.removed'))
+    router.push('/admin')
+  },
+  onError: () => {
+    toast.error('Oops.. something went wrong')
+  },
 })
 
 const submit = () => {
@@ -65,10 +75,18 @@ const submit = () => {
 
         <button
           btn
-          :disabled="!data.title"
+          disabled
           @click="submit"
         >
           {{ t('product.form.update') }}
+        </button>
+        <button
+          btn
+          bg-red-600
+          hover:bg-red-700
+          @click="deleteMutation.mutate(parseInt(props.id))"
+        >
+          {{ t('product.delete') }}
         </button>
       </div>
     </div>
