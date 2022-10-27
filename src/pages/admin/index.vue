@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query'
-import type { Products, Sort } from '~/types'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import type { Sort } from '~/types'
 
 const { t } = useI18n()
+const queryClient = useQueryClient()
 const productsPerPage = 15
 const sort = ref<Sort>('title')
 const page = ref(0)
-
-async function getProducts(page = 0, productsPerPage = 10, sort: Sort = 'title'): Promise<Products> {
-  return await fetch(`https://euricom-test-api.herokuapp.com/api/products?page=${page}&pageSize=${productsPerPage}&sort=${sort}`)
-    .then(response => response.json())
-}
 
 const setPage = (pageNumber: number) => {
   page.value = pageNumber
@@ -26,6 +22,17 @@ const {
 } = useQuery(['products', page, sort], () => getProducts(page.value, productsPerPage, sort.value), { keepPreviousData: true })
 
 const numberOfPages = computed((): number => Math.ceil((data.value?.total ?? 0) / productsPerPage))
+
+const deleteMutation = useMutation(deleteProduct, {
+  onSuccess: () => {
+    // Invalidate and refetch
+    queryClient.invalidateQueries(['products'])
+  },
+})
+
+const removeProduct = (id: number) => {
+  deleteMutation.mutate(id)
+}
 </script>
 
 <template>
@@ -71,6 +78,9 @@ const numberOfPages = computed((): number => Math.ceil((data.value?.total ?? 0) 
               <div i-carbon-caret-up block cursor-pointer hover:text-teal-700 :class="sort === 'basePrice' ? 'text-teal-700' : '' " @click="sort = 'basePrice'" />
             </div>
           </th>
+          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+            {{ t('product.actions') }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -92,6 +102,14 @@ const numberOfPages = computed((): number => Math.ceil((data.value?.total ?? 0) 
           </td>
           <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
             {{ product.basePrice }}
+          </td>
+          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+            <button class="icon-btn mx-2 !outline-none">
+              <div i="carbon-edit" />
+            </button>
+            <button class="icon-btn mx-2 !outline-none" @click="removeProduct(product.id)">
+              <div i="carbon-trash-can" />
+            </button>
           </td>
         </tr>
       </tbody>
