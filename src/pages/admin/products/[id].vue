@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import { useMutation, useQuery } from '@tanstack/vue-query'
 import { useToast } from 'vue-toast-notification'
+import { useField, useForm } from 'vee-validate'
+import { toFormValidator } from '@vee-validate/zod'
+import * as zod from 'zod'
 import { deleteProduct, getProduct, updateProduct } from '~/api/products'
+import type { ProductDTO } from '~/api/products'
 
 const props = defineProps<{ id: string }>()
+const productId = parseInt(props.id, 10)
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
+const validationSchema = toFormValidator(
+  zod.object({
+    title: zod.string().nonempty('This is required'),
+    // password: zod.string().nonempty('This is required').min(8, { message: 'Too short' }),
+  }),
+)
+const { handleSubmit, errors } = useForm({
+  validationSchema,
+})
+
+const { value: title } = useField('title')
 
 const {
   isLoading,
@@ -14,7 +30,7 @@ const {
   error,
   data,
 } = useQuery(['product', props.id],
-  () => getProduct(parseInt(props.id, 10)))
+  () => getProduct(productId))
 
 const mutation = useMutation(updateProduct, {
   onSuccess: () => {
@@ -32,9 +48,9 @@ const deleteMutation = useMutation(deleteProduct, {
   },
 })
 
-const submit = () => {
-  // mutation.mutate(data)
-}
+const onSubmit = handleSubmit((values) => {
+  mutation.mutate({ id: productId, product: values })
+})
 </script>
 
 <template>
@@ -51,27 +67,28 @@ const submit = () => {
       <span v-if="isLoading">Loading...</span>
       <span v-else-if="isError">{{ error }}</span>
       <div v-else-if="data">
-        <input
-          v-model="data.title"
-          :placeholder="t('product.title')"
-          :aria-label="t('product.title')"
-          type="text"
-          autocomplete="false"
-          p="x4 y2"
-          w="250px"
-          text="center"
-          bg="transparent"
-          border="~ rounded gray-200 dark:gray-700"
-          outline="none active:none"
-        >
+        <form @submit="onSubmit">
+          <input
+            v-model="title"
+            :placeholder="t('product.title')"
+            :aria-label="t('product.title')"
+            type="text"
+            autocomplete="false"
+            p="x4 y2"
+            w="250px"
+            text="center"
+            bg="transparent"
+            border="~ rounded gray-200 dark:gray-700"
+            outline="none active:none"
+          >
+          <span>{{ errors.title }}</span>
 
-        <button
-          btn
-          disabled
-          @click="submit"
-        >
-          {{ t('product.form.update') }}
-        </button>
+          <button
+            btn
+          >
+            {{ t('product.form.update') }}
+          </button>
+        </form>
         <button
           btn
           bg-red-600
