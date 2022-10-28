@@ -1,59 +1,69 @@
-import type { Product, ProductInputDTO, ProductsDTO, Sort } from '~/api/products'
+import { useToast } from 'vue-toast-notification'
+import type { ProductDTO, ProductInputDTO, ProductsDTO, Sort } from '~/api/products'
 
-export const deleteProduct = async (id: number): Promise<Product> => await fetch(`https://euricom-test-api.herokuapp.com/api/products/${id}`, { method: 'DELETE' })
-  .then(response => response.json())
+const url = 'https://euricom-test-api.herokuapp.com/'
+const toast = useToast()
 
-export const getProducts = async (page = 0, productsPerPage = 10, sort: Sort = 'title'): Promise<ProductsDTO> =>
-  await fetch(`https://euricom-test-api.herokuapp.com/api/products?page=${page}&pageSize=${productsPerPage}&sort=${sort}`)
-    .then(response => response.json())
-    // .then(dtos => dtos.map(dto => mapToEntity(dto)))
+// @TODO move get, post, put, remove and responseHandling functions to own file
+const responseHandling = (response: Response) => {
+  if (!response.ok) {
+    toast.error('Oops.. something went wrong')
+    throw new Error(response.statusText)
+  }
+  return response.json()
+}
 
-/**
- *
-     const data = await get<ProductDTO[]>(`api/products?page=${page}&pageSize=${productsPerPage}&sort=${sort})
+const get = async <T>(path: string): Promise<T> => {
+  const response = await fetch(url + path)
+  return responseHandling(response)
+}
 
-*/
-
-export const createProduct = async (product: ProductInputDTO): Promise<Product> => await fetch('https://euricom-test-api.herokuapp.com/api/products', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(product),
-})
-  .then((response) => {
-    if (response.ok)
-      return response.json()
-    throw new Error('RequestError')
+const post = async <T>(path: string, obj: object): Promise<T> => {
+  const response = await fetch(url + path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
   })
-  .then((json) => {
-    if (json.code === 'Bad Request')
-      throw new Error(json.message ? json.message : 'Oops.. something went wrong')
+  return responseHandling(response)
+}
 
-    return json
+const put = async <T>(path: string, obj: object): Promise<T> => {
+  const response = await fetch(url + path, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
   })
+  return responseHandling(response)
+}
 
-export const updateProduct = async (product: Product): Promise<Product> => await fetch(`https://euricom-test-api.herokuapp.com/api/products/${product.id}`, {
-  method: 'PUT',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(product),
-})
-  .then(response => response.json())
-  .then((response) => {
-    if (response.code === 'Bad Request')
-      throw new Error(response.message ? response.message : 'Oops.. something went wrong')
-
-    return response
+const remove = async <T>(path: string): Promise<T> => {
+  const response = await fetch(url + path, {
+    method: 'DELETE',
   })
+  return responseHandling(response)
+}
 
-export const getProduct = async (id: number): Promise<Product> =>
-  await fetch(`https://euricom-test-api.herokuapp.com/api/products/${id}`).then(
-    response => response.json(),
-  ).then((response) => {
-    if (response.code)
-      throw new Error(response.message ? response.message : 'Oops.. something went wrong')
+export const deleteProduct = async (id: number): Promise<ProductDTO> => {
+  return await remove <ProductDTO>(`api/products/${id}`)
+}
 
-    return response
-  })
+export const getProducts = async (page = 0, productsPerPage = 10, sort: Sort = 'title'): Promise<ProductsDTO> => {
+  return await get<ProductsDTO>(`api/products?page=${page}&pageSize=${productsPerPage}&sort=${sort}`)
+}
+
+export const createProduct = async (product: ProductInputDTO): Promise<ProductDTO> => {
+  return await post<ProductDTO>('api/products', product)
+}
+
+export const updateProduct = async (product: ProductDTO): Promise<ProductDTO> => {
+  return await put<ProductDTO>(`api/products/${product.id}`, product)
+}
+
+export const getProduct = async (id: number): Promise<ProductDTO> => {
+  return await get<ProductDTO>(`api/products/${id}`)
+}
+
