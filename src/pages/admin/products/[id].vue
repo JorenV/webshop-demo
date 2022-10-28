@@ -17,9 +17,6 @@ const {
   () => getProduct(parseInt(props.id, 10)))
 
 const mutation = useMutation(updateProduct, {
-  onError: (error: string) => {
-    toast.error(error)
-  },
   onSuccess: () => {
     toast.success(t('product.updated'))
     // Invalidate and refetch
@@ -32,9 +29,6 @@ const deleteMutation = useMutation(deleteProduct, {
   onSuccess: () => {
     toast.success(t('product.removed'))
     router.push('/admin/products')
-  },
-  onError: () => {
-    toast.error('Oops.. something went wrong')
   },
 })
 

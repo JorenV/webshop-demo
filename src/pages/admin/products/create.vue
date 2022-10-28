@@ -19,14 +19,9 @@ const product = reactive<ProductInputDTO>({
 })
 
 const mutation = useMutation(createProduct, {
-  onError: (error: string) => {
-    toast.error(error)
-  },
   onSuccess: () => {
     toast.success(t('product.created'))
     router.push('/admin/products')
-    // Invalidate and refetch
-    // queryClient.invalidateQueries(['products'])
   },
 
 })

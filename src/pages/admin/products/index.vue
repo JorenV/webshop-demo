@@ -32,14 +32,6 @@ const deleteMutation = useMutation(deleteProduct, {
     // Invalidate and refetch
     queryClient.invalidateQueries(['products'])
   },
-  onError: () => {
-    toast.error('Oops.. something went wrong')
-  },
-})
-
-watch(isError, (value) => {
-  if (value)
-    toast.error('Oops.. something went wrong')
 })
 
 const removeProduct = (id: number) => {
