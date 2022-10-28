@@ -55,65 +55,65 @@ const removeProduct = (id: number) => {
     <table v-else table-auto inline-block>
       <thead>
         <tr>
-          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+          <th th>
             <div flex items-end>
               {{ t('product.title') }}
               <div i-carbon-caret-up block cursor-pointer hover:text-teal-700 :class="sort === 'title' ? 'text-teal-700' : '' " @click="sort = 'title'" />
             </div>
           </th>
-          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+          <th th>
             {{ t('product.image') }}
           </th>
-          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+          <th th>
             <div flex items-end>
               {{ t('product.sku') }}
               <div i-carbon-caret-up block cursor-pointer hover:text-teal-700 :class="sort === 'sku' ? 'text-teal-700' : '' " @click="sort = 'sku'" />
             </div>
           </th>
-          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+          <th th>
             <div flex items-end>
               {{ t('product.stocked') }}
               <div i-carbon-caret-up block cursor-pointer hover:text-teal-700 :class="sort === 'stocked' ? 'text-teal-700' : '' " @click="sort = 'stocked'" />
             </div>
           </th>
-          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+          <th th>
             <div flex items-end>
               {{ t('product.price') }}
               <div i-carbon-caret-up block cursor-pointer hover:text-teal-700 :class="sort === 'price' ? 'text-teal-700' : '' " @click="sort = 'price'" />
             </div>
           </th>
-          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+          <th th>
             <div flex items-end>
               {{ t('product.basePrice') }}
               <div i-carbon-caret-up block cursor-pointer hover:text-teal-700 :class="sort === 'basePrice' ? 'text-teal-700' : '' " @click="sort = 'basePrice'" />
             </div>
           </th>
-          <th border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left>
+          <th th>
             {{ t('product.actions') }}
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="product in data?.selectedProducts" :key="product.id">
-          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+          <td td>
             {{ product.title }}
           </td>
-          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+          <td td>
             <img :src="product.image" block w-20 h-auto>
           </td>
-          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+          <td td>
             {{ product.sku }}
           </td>
-          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+          <td td>
             {{ product.stocked }}
           </td>
-          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+          <td td>
             {{ product.price }}
           </td>
-          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+          <td td>
             {{ product.basePrice }}
           </td>
-          <td border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400>
+          <td td>
             <router-link :to="`/admin/products/${product.id}`" class="icon-btn mx-2 !outline-none">
               <div i="carbon-edit" />
             </router-link>
