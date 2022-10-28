@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { useMutation } from '@tanstack/vue-query'
 import { useToast } from 'vue-toast-notification'
-import type { ProductInput } from '~/types'
+import type { ProductInputDTO } from '~/api/products'
+import { createProduct } from '~/api/products'
 
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
 
-const product = reactive<ProductInput>({
+const product = reactive<ProductInputDTO>({
   title: '',
   price: 0,
   stocked: false,

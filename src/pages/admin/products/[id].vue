@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useMutation, useQuery } from '@tanstack/vue-query'
 import { useToast } from 'vue-toast-notification'
+import { deleteProduct, getProduct, updateProduct } from '~/api/products'
 
 const props = defineProps<{ id: string }>()
 const { t } = useI18n()
@@ -13,10 +14,7 @@ const {
   error,
   data,
 } = useQuery(['product', props.id],
-  () => getProduct(parseInt(props.id)), {
-    onSuccess: (data) => {
-    },
-  })
+  () => getProduct(parseInt(props.id, 10)))
 
 const mutation = useMutation(updateProduct, {
   onError: (error: string) => {

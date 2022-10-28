@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { useToast } from 'vue-toast-notification'
-import type { Sort } from '~/types'
+import { deleteProduct, getProducts } from '~/api/products'
+import type { Sort } from '~/api/products'
 
 const { t } = useI18n()
 const toast = useToast()
