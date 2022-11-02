@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation, useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { useToast } from 'vue-toast-notification'
 import { deleteProduct, getProduct, updateProduct } from '~/api/products'
 import type { ProductInputDTO } from '~/api/products'
@@ -9,6 +9,7 @@ const productId = parseInt(props.id, 10)
 const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
+const queryClient = useQueryClient()
 
 const {
   isLoading,
@@ -22,7 +23,7 @@ const mutation = useMutation(updateProduct, {
   onSuccess: () => {
     toast.success(t('product.updated'))
     // Invalidate and refetch
-    // queryClient.invalidateQueries(['product'])
+    queryClient.invalidateQueries(['product'])
   },
 
 })
