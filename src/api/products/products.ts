@@ -13,7 +13,7 @@ export const createProduct = async (product: ProductInputDTO): Promise<ProductDT
   return await post<ProductDTO>('api/products', product)
 }
 
-export const updateProduct = async (params: { id: number; product: ProductDTO }): Promise<ProductDTO> => {
+export const updateProduct = async (params: { id: number; product: ProductInputDTO }): Promise<ProductDTO> => {
   return await put<ProductDTO>(`api/products/${params.id}`, params.product)
 }
 
