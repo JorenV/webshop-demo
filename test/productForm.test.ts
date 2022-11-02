@@ -26,6 +26,13 @@ describe('ProductForm', () => {
       },
     })
 
+    // submit form
+    const button = screen.getByRole('button')
+    // fireEvent.click(button)
+
+    // expect title field to have error
+    // const errors = screen.getByRole('error', { name: 'String must contain at least 1 character(s)' })
+
     // get input, and type 'Product 1'
     const title = screen.getByLabelText('product.title')
     await userEvent.type(title, 'Product 1')
@@ -47,15 +54,15 @@ describe('ProductForm', () => {
     fireEvent.click(stocked)
 
     // submit form
-    const buttonEl = screen.getByRole('button')
-    fireEvent.click(buttonEl)
+    fireEvent.click(button)
 
     const submitArg = emitted<any>().submit[0][0]
     expect(submitArg).toEqual({
-      userName: 'John',
-      email: 'john@domain.com',
-      cities: ['Chicago'],
-      selectedCity: 'NY',
+      title: 'Product 1',
+      sku: 'sku-product-1',
+      price: 55,
+      basePrice: 44,
+      stocked: true,
     })
   })
 })
