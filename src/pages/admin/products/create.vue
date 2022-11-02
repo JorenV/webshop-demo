@@ -31,7 +31,7 @@ const submit = (product: ProductInputDTO) => {
         {{ t('back') }}
       </router-link>
     </div>
-    <div>
+    <div flex flex-col items-center>
       <h3>{{ $t('product.create') }}</h3>
       <ProductForm @submit="submit" />
     </div>

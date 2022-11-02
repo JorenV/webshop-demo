@@ -25,6 +25,7 @@ product:
   delete: Delete product
   form:
     update: Update product 
+    create: Add product
 pagination:
   prev: Previous page
   next: Next page

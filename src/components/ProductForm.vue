@@ -133,7 +133,7 @@ const onSubmit = handleSubmit((values) => {
       btn
       mb-3
     >
-      {{ t('product.form.update') }}
+      {{ props.data ? t('product.form.update') : t('product.form.create') }}
     </button>
   </form>
 </template>
