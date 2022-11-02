@@ -5,7 +5,7 @@ import * as zod from 'zod'
 import type { ProductDTO } from '~/api/products'
 
 const props = defineProps<{
-  data: ProductDTO
+  data?: ProductDTO
 }>()
 const emits = defineEmits(['submit'])
 
@@ -23,8 +23,17 @@ const schema
   type FormValues = zod.infer<typeof schema>
 
 const { handleSubmit, errors, values } = useForm<FormValues>({
+  // validateOnMount: false,
   validationSchema: toFormValidator(schema),
-  initialValues: { ...props.data },
+  initialValues: props.data
+    ? { ...props.data }
+    : {
+        title: '',
+        sku: '',
+        price: 0,
+        basePrice: 0,
+        stocked: false,
+      },
 })
 
 const onSubmit = handleSubmit((values) => {

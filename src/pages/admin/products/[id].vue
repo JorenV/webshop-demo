@@ -34,7 +34,7 @@ const deleteMutation = useMutation(deleteProduct, {
   },
 })
 
-const onSubmit = (product: ProductInputDTO) => {
+const submit = (product: ProductInputDTO) => {
   mutation.mutate({ id: productId, product })
 }
 </script>
@@ -53,7 +53,7 @@ const onSubmit = (product: ProductInputDTO) => {
       <span v-if="isLoading">Loading...</span>
       <span v-else-if="isError">{{ error }}</span>
       <div v-else-if="data" flex flex-col items-center>
-        <ProductForm :data="data" @submit="onSubmit" />
+        <ProductForm :data="data" @submit="submit" />
         <button
           type="button"
           btn

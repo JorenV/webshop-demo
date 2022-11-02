@@ -8,16 +8,6 @@ const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
 
-const product = reactive<ProductInputDTO>({
-  title: '',
-  price: 0,
-  stocked: false,
-  desc: '',
-  image: 'https://dummyimage.com/300x300.jpg',
-  basePrice: 0,
-  sku: '',
-})
-
 const mutation = useMutation(createProduct, {
   onSuccess: () => {
     toast.success(t('product.created'))
@@ -26,7 +16,7 @@ const mutation = useMutation(createProduct, {
 
 })
 
-const submit = () => {
+const submit = (product: ProductInputDTO) => {
   mutation.mutate(product)
 }
 </script>
@@ -43,52 +33,7 @@ const submit = () => {
     </div>
     <div>
       <h3>{{ $t('product.create') }}</h3>
-      <input
-        v-model="product.title"
-        :placeholder="t('product.title')"
-        :aria-label="t('product.title')"
-        type="text"
-        autocomplete="false"
-        p="x4 y2"
-        w="250px"
-        text="center"
-        bg="transparent"
-        border="~ rounded gray-200 dark:gray-700"
-        outline="none active:none"
-      >
-      <input
-        v-model="product.sku"
-        :placeholder="t('product.sku')"
-        :aria-label="t('product.sku')"
-        type="text"
-        autocomplete="false"
-        p="x4 y2"
-        w="250px"
-        text="center"
-        bg="transparent"
-        border="~ rounded gray-200 dark:gray-700"
-        outline="none active:none"
-      >
-      <input
-        v-model="product.price"
-        :placeholder="t('product.price')"
-        :aria-label="t('product.price')"
-        type="number"
-        autocomplete="false"
-        p="x4 y2"
-        w="250px"
-        text="center"
-        bg="transparent"
-        border="~ rounded gray-200 dark:gray-700"
-        outline="none active:none"
-      >
-      <button
-        btn
-        :disabled="!product.title"
-        @click="submit"
-      >
-        {{ t('product.create') }}
-      </button>
+      <ProductForm @submit="submit" />
     </div>
   </div>
 </template>
