@@ -130,6 +130,7 @@ const onSubmit = handleSubmit((values) => {
     </div>
 
     <button
+      role="button"
       btn
       mb-3
     >
