@@ -24,10 +24,13 @@ product:
   create: New product
   delete: Delete product
   add_to_basket: Add to basket
+  in_basket: In basket
   out_of_stock: Out of stock
   form:
     update: Update product 
     create: Add product
+basket:
+  maxiumum_reached: Maximum number of products reached!
 pagination:
   prev: Previous page
   next: Next page

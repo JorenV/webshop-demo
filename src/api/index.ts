@@ -41,6 +41,17 @@ export const put = async <T>(path: string, obj: object): Promise<T> => {
   return responseHandling(response)
 }
 
+export const patch = async <T>(path: string, obj: object): Promise<T> => {
+  const response = await fetch(url + path, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
+  })
+  return responseHandling(response)
+}
+
 export const remove = async <T>(path: string): Promise<T> => {
   const response = await fetch(url + path, {
     method: 'DELETE',

@@ -6,8 +6,6 @@ import type { ProductDTO } from '~/api/products'
 
 const basket = useBasketStore()
 
-basket.fetch()
-
 const { t } = useI18n()
 
 const productsPerPage = 20
@@ -39,17 +37,8 @@ function onMoreProductsButtonVisibility(isVisible: boolean) {
       <p text-xl mb-2>
         Webshop
       </p>
-      <button class="icon-btn mx-2 !outline-none text-xl">
-        <div i="carbon-shopping-cart" />
-      </button>
-      <span>{{ basket.numberOfProducts }} products in card</span>
-      <div v-for="product in basket.items" :key="product.id">
-        ProductId: {{ product.productId }}
-        <button class="icon-btn mx-2 !outline-none" @click="basket.remove(product.productId)">
-          <div i="carbon-trash-can" />
-        </button>
-      </div>
     </div>
+    <Basket />
     <div flex flex-col items-center>
       <div grid grid-cols-4 gap-6 max-w-screen-md>
         <div v-for="product in products" :key="product.id" flex flex-col border dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200>
@@ -60,8 +49,8 @@ function onMoreProductsButtonVisibility(isVisible: boolean) {
           <p mb-3>
             &euro; {{ product.price }}
           </p>
-          <button btn :disabled="!product.stocked" @click="basket.add(product.id)">
-            {{ product.stocked ? t('product.add_to_basket') : t('product.out_of_stock') }}
+          <button btn :disabled="!product.stocked || basket.exists(product.id)" @click="basket.add(product.id)">
+            {{ basket.exists(product.id) ? t('product.in_basket') : (product.stocked ? t('product.add_to_basket') : t('product.out_of_stock')) }}
           </button>
         </div>
       </div>

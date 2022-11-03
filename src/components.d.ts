@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Basket: typeof import('./components/Basket.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
     ProductForm: typeof import('./components/ProductForm.vue')['default']
