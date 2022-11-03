@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useInfiniteQuery } from '@tanstack/vue-query'
+import { vElementVisibility } from '@vueuse/components'
 import { getProductsInfinite } from '~/api/products'
 import type { ProductDTO } from '~/api/products'
 
@@ -30,6 +31,11 @@ const {
 const products = computed((): ProductDTO[] | undefined => {
   return data.value?.pages.map(group => group.selectedProducts).flat()
 })
+
+function onMoreProductsButtonVisibility(isVisible: boolean) {
+  if (isVisible)
+    fetchNextPage()
+}
 </script>
 
 <template>
@@ -55,6 +61,7 @@ const products = computed((): ProductDTO[] | undefined => {
         </div>
       </div>
       <button
+        v-element-visibility="onMoreProductsButtonVisibility"
         :disabled="!hasNextPage || isFetchingNextPage"
         @click="fetchNextPage()"
       >
