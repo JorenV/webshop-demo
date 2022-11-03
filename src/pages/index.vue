@@ -55,7 +55,10 @@ function onMoreProductsButtonVisibility(isVisible: boolean) {
           <h3 text-lg mb-3>
             {{ product.title }}
           </h3>
-          <button btn>
+          <p mb-3>
+            &euro; {{ product.price }}
+          </p>
+          <button btn :disabled="!product.stocked">
             {{ t('product.add_to_basket') }}
           </button>
         </div>
