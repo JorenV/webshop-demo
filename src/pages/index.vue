@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useInfiniteQuery } from '@tanstack/vue-query'
 import { getProductsInfinite } from '~/api/products'
+import type { ProductDTO } from '~/api/products'
 
 const user = useUserStore()
 const name = $ref(user.savedName)
@@ -25,6 +26,10 @@ const {
   queryFn: getProductsInfinite,
   getNextPageParam: (lastPage, pages) => (lastPage.total > (productsPerPage * pages.length)) ? lastPage.page + 1 : undefined,
 })
+
+const products = computed((): ProductDTO[] | undefined => {
+  return data.value?.pages.map(group => group.selectedProducts).flat()
+})
 </script>
 
 <template>
@@ -38,8 +43,8 @@ const {
       </button>
     </div>
     <div flex flex-col items-center>
-      <div v-for="page, index in data?.pages" :key="index" grid grid-cols-4 gap-6 max-w-screen-md>
-        <div v-for="product in page.selectedProducts" :key="product.id" flex flex-col border dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200>
+      <div grid grid-cols-4 gap-6 max-w-screen-md>
+        <div v-for="product in products" :key="product.id" flex flex-col border dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200>
           <img :src="product.image" block max-w-full h-auto mb-3>
           <h3 text-lg mb-3>
             {{ product.title }}
