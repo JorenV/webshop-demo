@@ -4,14 +4,9 @@ import { vElementVisibility } from '@vueuse/components'
 import { getProductsInfinite } from '~/api/products'
 import type { ProductDTO } from '~/api/products'
 
-const user = useUserStore()
-const name = $ref(user.savedName)
+const basket = useBasketStore()
 
-const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
-}
+basket.fetch()
 
 const { t } = useI18n()
 
@@ -47,6 +42,13 @@ function onMoreProductsButtonVisibility(isVisible: boolean) {
       <button class="icon-btn mx-2 !outline-none text-xl">
         <div i="carbon-shopping-cart" />
       </button>
+      <span>{{ basket.numberOfProducts }} products in card</span>
+      <div v-for="product in basket.items" :key="product.id">
+        ProductId: {{ product.productId }}
+        <button class="icon-btn mx-2 !outline-none" @click="basket.remove(product.productId)">
+          <div i="carbon-trash-can" />
+        </button>
+      </div>
     </div>
     <div flex flex-col items-center>
       <div grid grid-cols-4 gap-6 max-w-screen-md>
@@ -58,8 +60,8 @@ function onMoreProductsButtonVisibility(isVisible: boolean) {
           <p mb-3>
             &euro; {{ product.price }}
           </p>
-          <button btn :disabled="!product.stocked">
-            {{ t('product.add_to_basket') }}
+          <button btn :disabled="!product.stocked" @click="basket.add(product.id)">
+            {{ product.stocked ? t('product.add_to_basket') : t('product.out_of_stock') }}
           </button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { useToast } from 'vue-toast-notification'
 
 export * from './products'
+export * from './basket'
 
 const url = 'https://euricom-test-api.herokuapp.com/'
 const toast = useToast()

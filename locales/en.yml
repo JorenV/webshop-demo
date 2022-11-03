@@ -24,6 +24,7 @@ product:
   create: New product
   delete: Delete product
   add_to_basket: Add to basket
+  out_of_stock: Out of stock
   form:
     update: Update product 
     create: Add product

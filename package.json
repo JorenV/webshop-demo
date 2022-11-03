@@ -25,6 +25,7 @@
     "@vueuse/head": "^0.9.7",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.22",
+    "uuid": "^9.0.0",
     "vee-validate": "^4.7.1",
     "vue": "^3.2.40",
     "vue-demi": "^0.13.11",
