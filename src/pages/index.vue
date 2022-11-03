@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useInfiniteQuery } from '@tanstack/vue-query'
+import { getProductsInfinite } from '~/api/products'
+
 const user = useUserStore()
 const name = $ref(user.savedName)
 
@@ -9,48 +12,52 @@ const go = () => {
 }
 
 const { t } = useI18n()
+
+const productsPerPage = 20
+
+const {
+  data,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+} = useInfiniteQuery({
+  queryKey: ['products'],
+  queryFn: getProductsInfinite,
+  getNextPageParam: (lastPage, pages) => (lastPage.total > (productsPerPage * pages.length)) ? lastPage.page + 1 : undefined,
+})
 </script>
 
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
+    <div mb-5>
+      <p text-xl mb-2>
+        Webshop
+      </p>
+      <button class="icon-btn mx-2 !outline-none text-xl">
+        <div i="carbon-shopping-cart" />
+      </button>
     </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
-    <p>
-      <em text-sm opacity-75>{{ t('intro.desc') }}</em>
-    </p>
-
-    <div py-4 />
-
-    <input
-      id="input"
-      v-model="name"
-      :placeholder="t('intro.whats-your-name')"
-      :aria-label="t('intro.whats-your-name')"
-      type="text"
-      autocomplete="false"
-      p="x4 y2"
-      w="250px"
-      text="center"
-      bg="transparent"
-      border="~ rounded gray-200 dark:gray-700"
-      outline="none active:none"
-      @keydown.enter="go"
-    >
-    <label class="hidden" for="input">{{ t('intro.whats-your-name') }}</label>
-
-    <div>
+    <div flex flex-col items-center>
+      <div v-for="page, index in data?.pages" :key="index" grid grid-cols-4 gap-6 max-w-screen-md>
+        <div v-for="product in page.selectedProducts" :key="product.id" flex flex-col border dark:border-slate-600 font-medium p-4 text-slate-400 dark:text-slate-200>
+          <img :src="product.image" block max-w-full h-auto mb-3>
+          <h3 text-lg mb-3>
+            {{ product.title }}
+          </h3>
+          <button btn>
+            {{ t('product.add_to_basket') }}
+          </button>
+        </div>
+      </div>
       <button
-        btn m-3 text-sm
-        :disabled="!name"
-        @click="go"
+        :disabled="!hasNextPage || isFetchingNextPage"
+        @click="fetchNextPage()"
       >
-        {{ t('button.go') }}
+        {{ isFetchingNextPage
+          ? 'Loading more...'
+          : hasNextPage
+            ? 'Load More'
+            : 'Nothing more to load' }}
       </button>
     </div>
   </div>

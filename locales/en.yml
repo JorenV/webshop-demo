@@ -23,6 +23,7 @@ product:
   removed: Product removed!
   create: New product
   delete: Delete product
+  add_to_basket: Add to basket
   form:
     update: Update product 
     create: Add product
