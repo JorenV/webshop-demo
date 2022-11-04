@@ -8,7 +8,7 @@ export const useBasketStore = defineStore('basket', () => {
   const { t } = useI18n()
   const toast = useToast()
 
-  const uuid = '454'
+  const uuid = ref<string>(uuidv4())
   const items = ref<Basket[]>([])
 
   const numberOfProducts = computed(() => items.value.length)
@@ -22,7 +22,7 @@ export const useBasketStore = defineStore('basket', () => {
   })
 
   async function fetch() {
-    items.value = await getBasket(uuid)
+    items.value = await getBasket(uuid.value)
   }
 
   async function add(id: number) {
@@ -30,17 +30,17 @@ export const useBasketStore = defineStore('basket', () => {
       toast.error(t('basket.maxiumum_reached'))
       return
     }
-    items.value = await addProductToBasket(uuid, id)
+    items.value = await addProductToBasket(uuid.value, id)
     toast.success(t('basket.product_added'))
   }
 
   async function remove(id: number) {
-    items.value = await removeProductFromBasket(uuid, id)
+    items.value = await removeProductFromBasket(uuid.value, id)
     toast.success(t('basket.product_removed'))
   }
 
   async function quantity(id: number, quantity: number) {
-    items.value = await updateQuantityForProductInBasket(uuid, id, quantity)
+    items.value = await updateQuantityForProductInBasket(uuid.value, id, quantity)
     toast.success(t('basket.quantity_updated'))
   }
 
@@ -59,6 +59,11 @@ export const useBasketStore = defineStore('basket', () => {
     exists,
     quantity,
   }
+},
+{
+  persist: {
+    paths: ['uuid'],
+  },
 })
 
 if (import.meta.hot)

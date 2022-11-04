@@ -25,6 +25,7 @@
     "@vueuse/head": "^0.9.7",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.22",
+    "pinia-plugin-persistedstate": "^2.3.0",
     "uuid": "^9.0.0",
     "vee-validate": "^4.7.1",
     "vue": "^3.2.40",
