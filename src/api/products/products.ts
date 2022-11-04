@@ -9,10 +9,6 @@ export const getProducts = async (page = 0, productsPerPage = 10, sort: Sort = '
   return await get<ProductsDTO>(`api/products?page=${page}&pageSize=${productsPerPage}&sort=${sort}`)
 }
 
-export const getProductsInfinite = async ({ pageParam = 0 }): Promise<ProductsDTO> => {
-  return await get<ProductsDTO>(`api/products?page=${pageParam}&sort=title`)
-}
-
 export const createProduct = async (product: ProductInputDTO): Promise<ProductDTO> => {
   return await post<ProductDTO>('api/products', product)
 }

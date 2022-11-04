@@ -35,7 +35,7 @@ const { t } = useI18n()
             </button>
           </div>
           <div grow text-right>
-            &euro;{{ item.product.price * item.quantity }}
+            &euro;{{ (item.product.price * item.quantity).toFixed(2) }}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useInfiniteQuery } from '@tanstack/vue-query'
 import { vElementVisibility } from '@vueuse/components'
-import { getProductsInfinite } from '~/api/products'
+import { getProducts } from '~/api/products'
 import type { ProductDTO } from '~/api/products'
 
 const basket = useBasketStore()
@@ -10,6 +10,10 @@ const { t } = useI18n()
 
 const productsPerPage = 20
 
+const fetchProducts = async ({ pageParam = 0 }) => {
+  return await getProducts(pageParam, productsPerPage)
+}
+
 const {
   data,
   fetchNextPage,
@@ -17,7 +21,7 @@ const {
   isFetchingNextPage,
 } = useInfiniteQuery({
   queryKey: ['products'],
-  queryFn: getProductsInfinite,
+  queryFn: fetchProducts,
   getNextPageParam: (lastPage, pages) => (lastPage.total > (productsPerPage * pages.length)) ? lastPage.page + 1 : undefined,
 })
 
