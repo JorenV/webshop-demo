@@ -1,7 +1,7 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import { useToast } from 'vue-toast-notification'
-import type { BasketDTO } from '~/api/basket'
+import type { Basket } from '~/api/basket'
 import { addProductToBasket, getBasket, removeProductFromBasket, updateQuantityForProductInBasket } from '~/api/basket'
 
 export const useBasketStore = defineStore('basket', () => {
@@ -9,9 +9,17 @@ export const useBasketStore = defineStore('basket', () => {
   const toast = useToast()
 
   const uuid = '454'
-  const items = ref<BasketDTO[]>([])
+  const items = ref<Basket[]>([])
 
   const numberOfProducts = computed(() => items.value.length)
+
+  const total = computed(() => {
+    let amount = 0
+    items.value.forEach((item) => {
+      amount += (item.product.price * item.quantity)
+    })
+    return amount.toFixed(2)
+  })
 
   async function fetch() {
     items.value = await getBasket(uuid)
@@ -22,7 +30,6 @@ export const useBasketStore = defineStore('basket', () => {
       toast.error(t('basket.maxiumum_reached'))
       return
     }
-
     items.value = await addProductToBasket(uuid, id)
     toast.success(t('basket.product_added'))
   }
@@ -32,12 +39,12 @@ export const useBasketStore = defineStore('basket', () => {
     toast.success(t('basket.product_removed'))
   }
 
-  async function quantity(id: number, quantity: id) {
+  async function quantity(id: number, quantity: number) {
     items.value = await updateQuantityForProductInBasket(uuid, id, quantity)
     toast.success(t('basket.quantity_updated'))
   }
 
-  function exists(id: number) {
+  function exists(id: number): boolean {
     return items.value.some(product => product.productId === id)
   }
 
@@ -45,6 +52,7 @@ export const useBasketStore = defineStore('basket', () => {
     items,
     uuid,
     numberOfProducts,
+    total,
     fetch,
     add,
     remove,
