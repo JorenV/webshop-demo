@@ -39,7 +39,7 @@ const { t } = useI18n()
           </div>
         </div>
       </div>
-      <div text-right p-4 border-t>
+      <div text-right p-4 bg-teal-800>
         &euro;{{ basket.total }}
       </div>
     </div>
