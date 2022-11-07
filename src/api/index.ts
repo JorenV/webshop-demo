@@ -3,6 +3,8 @@ import { useToast } from 'vue-toast-notification'
 export * from './products'
 export * from './basket'
 
+// TODO: Use index.ts only to combine imports, not to add extra code
+
 const url = 'https://euricom-test-api.herokuapp.com/'
 const toast = useToast()
 

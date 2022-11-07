@@ -59,7 +59,7 @@ const onSubmit = handleSubmit((values) => {
         border="~ rounded gray-200 dark:gray-700"
         outline="none active:none"
       >
-      <span text-red-900 text-sm mt-1>{{ errors.title }}</span>
+      <span v-if="errors.title" role="status" text-red-900 text-sm mt-1>{{ errors.title }}</span>
     </div>
     <div flex flex-col text-left mb-4>
       <label for="product-sku">{{ t('product.sku') }}</label>
@@ -77,7 +77,7 @@ const onSubmit = handleSubmit((values) => {
         border="~ rounded gray-200 dark:gray-700"
         outline="none active:none"
       >
-      <span text-red-900 text-sm mt-1>{{ errors.sku }}</span>
+      <span v-if="errors.sku" role="status" text-red-900 text-sm mt-1>{{ errors.sku }}</span>
     </div>
 
     <div flex flex-col text-left mb-4>
@@ -96,7 +96,7 @@ const onSubmit = handleSubmit((values) => {
         border="~ rounded gray-200 dark:gray-700"
         outline="none active:none"
       >
-      <span text-red-900 text-sm mt-1>{{ errors.price }}</span>
+      <span v-if="errors.price" role="status" text-red-900 text-sm mt-1>{{ errors.price }}</span>
     </div>
 
     <div flex flex-col text-left mb-4>
@@ -115,7 +115,7 @@ const onSubmit = handleSubmit((values) => {
         border="~ rounded gray-200 dark:gray-700"
         outline="none active:none"
       >
-      <span text-red-900 text-sm mt-1>{{ errors.basePrice }}</span>
+      <span v-if="errors.basePrice" role="status" text-red-900 text-sm mt-1>{{ errors.basePrice }}</span>
     </div>
 
     <div class="mb-4">
@@ -126,11 +126,10 @@ const onSubmit = handleSubmit((values) => {
         >
         <label for="product-stocked" ml-2>{{ t('product.stocked') }}</label>
       </div>
-      <span text-red-900 text-sm mt-1>{{ errors.stocked }}</span>
+      <span v-if="errors.stocked" role="status" text-red-900 text-sm mt-1>{{ errors.stocked }}</span>
     </div>
 
     <button
-      role="button"
       btn
       mb-3
     >

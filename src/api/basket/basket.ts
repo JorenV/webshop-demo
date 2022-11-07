@@ -6,6 +6,7 @@ const mapBasket = async (basket: BasketDTO[]): Promise<Basket[]> => {
     id: item.id,
     productId: item.productId,
     quantity: item.quantity,
+    // TODO: don't add async data access in the map function
     product: await getProduct(item.productId),
   }) as Basket))
 }
