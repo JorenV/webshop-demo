@@ -1,11 +1,12 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
+// @ts-expect-error uuid has no declaration file
 import { v4 as uuidv4 } from 'uuid'
 import { useToast } from 'vue-toast-notification'
 import type { Basket } from '~/api/basket'
 import { addProductToBasket, getBasket, removeProductFromBasket, updateQuantityForProductInBasket } from '~/api/basket'
 
 export const useBasketStore = defineStore('basket', () => {
-  const { t } = useI18n()
+  // const { t } = useI18n()
   const toast = useToast()
 
   const uuid = ref<string>(uuidv4())

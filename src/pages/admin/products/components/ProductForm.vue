@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
 import { toFormValidator } from '@vee-validate/zod'
-import * as zod from 'zod'
+import type * as zod from 'zod'
+import { schema } from './schema'
 import type { ProductDTO } from '~/api/products'
 
 const props = defineProps<{
@@ -10,17 +11,7 @@ const props = defineProps<{
 const emits = defineEmits(['submit'])
 
 const { t } = useI18n()
-const schema
-  = zod.object({
-    title: zod.string().min(1),
-    sku: zod.string().min(1),
-    price: zod.number(),
-    basePrice: zod.number(),
-    stocked: zod.boolean(),
-    // password: zod.string().nonempty('This is required').min(8, { message: 'Too short' }),
-  })
-
-  type FormValues = zod.infer<typeof schema>
+type FormValues = zod.infer<typeof schema>
 
 const { handleSubmit, errors, values } = useForm<FormValues>({
   // validateOnMount: false,

@@ -1,6 +1,5 @@
 export interface ProductDTO {
   basePrice: number
-  desc: string
   id: number
   image: string
   price: number

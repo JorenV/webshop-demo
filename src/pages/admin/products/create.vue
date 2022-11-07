@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useMutation } from '@tanstack/vue-query'
 import { useToast } from 'vue-toast-notification'
+import ProductForm from './components/ProductForm.vue'
 import type { ProductInputDTO } from '~/api/products'
 import { createProduct } from '~/api/products'
 
