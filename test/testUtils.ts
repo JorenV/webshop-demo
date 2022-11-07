@@ -1,6 +1,7 @@
 import { render as renderTL } from '@testing-library/vue'
 import type { RenderOptions, RenderResult } from '@testing-library/vue'
 import { createI18n } from 'vue-i18n'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 
 export type CustomRenderOptions = RenderOptions & {
   myOption?: string
@@ -28,7 +29,7 @@ export function render(
     ...restOptions,
     global: {
       ...global,
-      plugins: [...(global?.plugins || []), i18n],
+      plugins: [...(global?.plugins || []), i18n, VueQueryPlugin],
     },
   }
   return renderTL(TestComponent as any, { ...customRenderOptions })

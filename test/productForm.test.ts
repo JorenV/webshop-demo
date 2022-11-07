@@ -9,7 +9,7 @@ import {
   waitFor,
 } from '../test/testUtils'
 
-import ProductForm from '../src/components/ProductForm.vue'
+import ProductForm from '../src/pages/admin/products/components/ProductForm.vue'
 
 describe('ProductForm', () => {
   afterEach(() => {

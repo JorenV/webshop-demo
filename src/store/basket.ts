@@ -32,7 +32,7 @@ export const useBasketStore = defineStore('basket', () => {
       return
     }
     items.value = await addProductToBasket(uuid.value, id)
-    toast.success(t('basket.product_added'))
+    // toast.success(t('basket.product_added'))
   }
 
   async function remove(id: number) {

@@ -94,7 +94,7 @@ const removeProduct = (id: number) => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in data?.selectedProducts" :key="product.id">
+        <tr v-for="product in data?.selectedProducts" :key="product.id" role="listitem">
           <td td>
             {{ product.title }}
           </td>
