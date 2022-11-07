@@ -29,14 +29,10 @@ describe('ProductForm', () => {
 
     // submit form
     const button = screen.getByRole('button')
-    await fireEvent.click(button)
-    // await flushPromises()
+    // fireEvent.click(button)
 
     // expect title field to have error
-    const errors = screen.getByRole('error')
-    waitFor(() => {
-      expect(errors.innerHTML).toContain('blabla')
-    })
+    // const errors = screen.getByRole('error')
 
     // get input, and type 'Product 1'
     const title = screen.getByLabelText('product.title')
@@ -63,15 +59,15 @@ describe('ProductForm', () => {
     fireEvent.click(stocked)
 
     // submit form
-    // fireEvent.click(button)
+    fireEvent.click(button)
 
-    // const submitArg = emitted<any>().submit[0][0]
-    // expect(submitArg).toEqual({
-    //   title: 'Product 1',
-    //   sku: 'sku-product-1',
-    //   price: 55,
-    //   basePrice: 44,
-    //   stocked: true,
-    // })
+    const submitArg = emitted<any>().submit[0][0]
+    expect(submitArg).toEqual({
+      title: 'Product 1',
+      sku: 'sku-product-1',
+      price: 55,
+      basePrice: 44,
+      stocked: true,
+    })
   })
 })
