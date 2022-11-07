@@ -42,6 +42,7 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
+  Error : {{ errors }}
   <form flex flex-col w-100 max-w-screen-md novalidate @submit.prevent="onSubmit">
     <div flex flex-col text-left mb-4>
       <label for="product-title">{{ t('product.title') }}</label>

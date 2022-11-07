@@ -15,6 +15,7 @@ describe('ProductForm', () => {
   afterEach(() => {
     cleanup()
   })
+
   test('valid fields', async () => {
     const { emitted } = render(ProductForm)
 
@@ -34,11 +35,12 @@ describe('ProductForm', () => {
 
     // submit form
     const button = screen.getByRole('button')
-    await fireEvent.click(button)
+    fireEvent.click(button)
 
     await waitFor(() => {
       expect(emitted<any>().submit).toBeDefined()
     })
+
     const submitArg = emitted<any>().submit[0][0]
     expect(submitArg).toEqual(expect.objectContaining({
       basePrice: 44, price: 55, sku: 'sku-product-1', title: 'Product 1',
@@ -56,5 +58,8 @@ describe('ProductForm', () => {
       const errors = screen.getAllByRole('status')
       expect(errors).toHaveLength(2)
     })
+
+    // const title = screen.getByLabelText('product.title')
+    // expect(title).toHaveErrorMessage(/invalid time/i)
   })
 })
