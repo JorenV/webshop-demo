@@ -6,7 +6,7 @@ import type { Basket } from '~/api/basket'
 import { addProductToBasket, getBasket, removeProductFromBasket, updateQuantityForProductInBasket } from '~/api/basket'
 
 export const useBasketStore = defineStore('basket', () => {
-  // const { t } = useI18n()
+  const { t } = useI18n()
   const toast = useToast()
 
   const uuid = ref<string>(uuidv4())
@@ -32,7 +32,7 @@ export const useBasketStore = defineStore('basket', () => {
       return
     }
     items.value = await addProductToBasket(uuid.value, id)
-    // toast.success(t('basket.product_added'))
+    toast.success(t('basket.product_added'))
   }
 
   async function remove(id: number) {
