@@ -137,6 +137,7 @@ export default defineConfig({
   test: {
     include: ['test/**/*.test.ts'],
     environment: 'jsdom',
+    setupFiles: 'test/setup.ts',
     deps: {
       inline: ['@vue', '@vueuse', 'vue-demi'],
     },

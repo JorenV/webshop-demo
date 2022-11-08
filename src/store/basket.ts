@@ -68,4 +68,4 @@ export const useBasketStore = defineStore('basket', () => {
 })
 
 if (import.meta.hot)
-  import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useBasketStore, import.meta.hot))

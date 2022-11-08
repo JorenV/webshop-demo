@@ -59,7 +59,10 @@ describe('ProductForm', () => {
       expect(errors).toHaveLength(2)
     })
 
-    // const title = screen.getByLabelText('product.title')
-    // expect(title).toHaveErrorMessage(/invalid time/i)
+    const title = screen.getByLabelText('product.title')
+    expect(title).toHaveErrorMessage(/must contain at least/i)
+
+    const sku = screen.getByLabelText('product.sku')
+    expect(sku).toHaveErrorMessage(/must contain at least/i)
   })
 })

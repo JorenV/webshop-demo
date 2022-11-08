@@ -33,82 +33,11 @@ const onSubmit = handleSubmit((values) => {
 </script>
 
 <template>
-  Error : {{ errors }}
   <form flex flex-col w-100 max-w-screen-md novalidate @submit.prevent="onSubmit">
-    <div flex flex-col text-left mb-4>
-      <label for="product-title">{{ t('product.title') }}</label>
-      <input
-        id="product-title"
-        v-model="values.title"
-        w-full
-        :placeholder="t('product.title')"
-        :aria-label="t('product.title')"
-        type="text"
-        autocomplete="false"
-        p="x4 y2"
-        text="center"
-        bg="transparent"
-        border="~ rounded gray-200 dark:gray-700"
-        outline="none active:none"
-      >
-      <span v-if="errors.title" role="status" text-red-900 text-sm mt-1>{{ errors.title }}</span>
-    </div>
-    <div flex flex-col text-left mb-4>
-      <label for="product-sku">{{ t('product.sku') }}</label>
-      <input
-        id="product-sku"
-        v-model="values.sku"
-        w-full
-        :placeholder="t('product.sku')"
-        :aria-label="t('product.sku')"
-        type="text"
-        autocomplete="false"
-        p="x4 y2"
-        text="center"
-        bg="transparent"
-        border="~ rounded gray-200 dark:gray-700"
-        outline="none active:none"
-      >
-      <span v-if="errors.sku" role="status" text-red-900 text-sm mt-1>{{ errors.sku }}</span>
-    </div>
-
-    <div flex flex-col text-left mb-4>
-      <label for="product-price">{{ t('product.price') }}</label>
-      <input
-        id="product-price"
-        v-model="values.price"
-        w-full
-        :placeholder="t('product.price')"
-        :aria-label="t('product.price')"
-        type="number"
-        autocomplete="false"
-        p="x4 y2"
-        text="center"
-        bg="transparent"
-        border="~ rounded gray-200 dark:gray-700"
-        outline="none active:none"
-      >
-      <span v-if="errors.price" role="status" text-red-900 text-sm mt-1>{{ errors.price }}</span>
-    </div>
-
-    <div flex flex-col text-left mb-4>
-      <label for="product-basePrice">{{ t('product.basePrice') }}</label>
-      <input
-        id="product-basePrice"
-        v-model="values.basePrice"
-        w-full
-        :placeholder="t('product.basePrice')"
-        :aria-label="t('product.basePrice')"
-        type="number"
-        autocomplete="false"
-        p="x4 y2"
-        text="center"
-        bg="transparent"
-        border="~ rounded gray-200 dark:gray-700"
-        outline="none active:none"
-      >
-      <span v-if="errors.basePrice" role="status" text-red-900 text-sm mt-1>{{ errors.basePrice }}</span>
-    </div>
+    <InputField type="text" name="title" />
+    <InputField type="text" name="sku" />
+    <InputField type="number" name="price" />
+    <InputField type="number" name="basePrice" />
 
     <div class="mb-4">
       <div flex items-center>
