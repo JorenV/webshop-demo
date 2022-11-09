@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { useInfiniteQuery } from '@tanstack/vue-query'
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import { vElementVisibility } from '@vueuse/components'
 import { getProducts } from '~/api/products'
 import type { ProductDTO } from '~/api/products'
+import { addProductToBasket } from '~/api/basket'
 
 const basket = useBasketStore()
 
 const { t } = useI18n()
 
 const productsPerPage = 20
+const queryClient = useQueryClient()
 
 const fetchProducts = async ({ pageParam = 0 }) => {
   return await getProducts(pageParam, productsPerPage)
@@ -33,6 +35,17 @@ function onMoreProductsButtonVisibility(isVisible: boolean) {
   if (isVisible)
     fetchNextPage()
 }
+
+const addMutation = useMutation({
+  mutationFn: addProductToBasket,
+  onSuccess: (data) => {
+    queryClient.setQueryData(['basket'], data)
+  },
+})
+
+const add = (id: number) => {
+  addMutation.mutate({ basketId: basket.uuid, productId: id, quantity: 1 })
+}
 </script>
 
 <template>
@@ -53,8 +66,8 @@ function onMoreProductsButtonVisibility(isVisible: boolean) {
           <p mb-3>
             &euro; {{ product.price }}
           </p>
-          <button btn :disabled="!product.stocked || basket.exists(product.id)" @click="basket.add(product.id)">
-            {{ basket.exists(product.id) ? t('product.in_basket') : (product.stocked ? t('product.add_to_basket') : t('product.out_of_stock')) }}
+          <button btn :disabled="!product.stocked" @click="add(product.id)">
+            {{ product.stocked ? t('product.add_to_basket') : t('product.out_of_stock') }}
           </button>
         </div>
       </div>
